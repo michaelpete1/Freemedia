@@ -13,9 +13,15 @@
             v-for="link in navLinks"
             :key="link.name"
             :to="link.path"
-            class="text-[#f4e9d8] hover:text-[#f8c99e] font-medium transition"
+            class="text-[#f4e9d8] hover:text-[#f8c99e] font-medium transition flex items-center space-x-1"
           >
-            {{ link.name }}
+            <template v-if="link.name === 'HomePage'">
+              <Home class="w-5 h-5" />
+              <span>Home</span>
+            </template>
+            <template v-else>
+              {{ link.name }}
+            </template>
           </router-link>
         </div>
 
@@ -56,10 +62,16 @@
           v-for="link in navLinks"
           :key="link.name"
           :to="link.path"
-          class="block py-2 text-[#f4e9d8] hover:text-[#f8c99e] font-medium"
+          class="block py-2 text-[#f4e9d8] hover:text-[#f8c99e] font-medium flex items-center space-x-2"
           @click="isOpen = false"
         >
-          {{ link.name }}
+          <template v-if="link.name === 'HomePage'">
+            <Home class="w-5 h-5" />
+            <span>Home</span>
+          </template>
+          <template v-else>
+            {{ link.name }}
+          </template>
         </router-link>
       </div>
     </transition>
@@ -68,6 +80,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Home } from 'lucide-vue-next' // ✅ Import Lucide Home icon
 
 const isOpen = ref(false)
 const toggleMenu = () => {
