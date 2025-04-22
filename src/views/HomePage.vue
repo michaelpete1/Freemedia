@@ -1,8 +1,13 @@
 <template>
-  <div class="min-h-screen bg-[#3b2f2f] text-white">
-    <div class="animate-fade-in">
+  <div class="min-h-screen bg-[#3b2f2f] text-white px-4 py-8">
+    <div class="animate-fade-in space-y-16">
+      <!-- Hero Section -->
       <HeroSection />
+
+      <!-- Featured Posts -->
       <FeaturedPosts />
+
+      <!-- Footer -->
       <FooterSection />
     </div>
   </div>
