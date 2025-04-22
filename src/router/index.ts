@@ -6,7 +6,9 @@ import ProfilePage from '../views/ProfilePage.vue'
 import CreatePage from '../views/CreatePage.vue'
 import PostDetailPage from '../views/PostDetailPage.vue'
 import Posts from '../views/Posts.vue'
-import { Component } from 'lucide-react'
+
+
+
 
 const routes = [
   { path: '/', name: 'HomePage', component: HomePage },
