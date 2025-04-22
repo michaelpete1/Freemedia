@@ -15,10 +15,15 @@
             :to="link.path"
             class="text-[#f4e9d8] hover:text-[#f8c99e] font-medium transition flex items-center space-x-1"
           >
+            <!-- Custom Home Icon (SVG) -->
             <template v-if="link.name === 'HomePage'">
-              <Home class="w-5 h-5" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"/>
+              </svg>
               <span>Home</span>
             </template>
+            <!-- For other links, just display the name -->
             <template v-else>
               {{ link.name }}
             </template>
@@ -65,10 +70,15 @@
           class="block py-2 text-[#f4e9d8] hover:text-[#f8c99e] font-medium flex items-center space-x-2"
           @click="isOpen = false"
         >
+          <!-- Custom Home Icon (SVG) for Mobile -->
           <template v-if="link.name === 'HomePage'">
-            <Home class="w-5 h-5" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10"/>
+            </svg>
             <span>Home</span>
           </template>
+          <!-- For other links, just display the name -->
           <template v-else>
             {{ link.name }}
           </template>
@@ -80,7 +90,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Home } from 'lucide-vue-next'
 
 const isOpen = ref(false)
 const toggleMenu = () => {

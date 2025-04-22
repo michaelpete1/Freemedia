@@ -15,13 +15,25 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 
-const post = ref<any>(null)
+interface Post {
+  title: string
+  body: string
+}
+
+const post = ref<Post | null>(null)
 const isLoading = ref(true)
-const errorMessage = ref('')
+const errorMessage = ref<string>('')
+
 const route = useRoute()
 
 const fetchPost = async () => {
   const { id } = route.params
+  if (!id) {
+    errorMessage.value = 'Post ID is missing in the route.'
+    isLoading.value = false
+    return
+  }
+
   try {
     const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
     post.value = response.data
