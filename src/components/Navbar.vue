@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Home } from 'lucide-vue-next' // ✅ Import Lucide Home icon
+import { Home } from 'lucide-vue-next'
 
 const isOpen = ref(false)
 const toggleMenu = () => {
