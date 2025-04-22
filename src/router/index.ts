@@ -7,9 +7,6 @@ import CreatePage from '../views/CreatePage.vue'
 import PostDetailPage from '../views/PostDetailPage.vue'
 import Posts from '../views/Posts.vue'
 
-
-
-
 const routes = [
   { path: '/', name: 'HomePage', component: HomePage },
   { path: '/LoginPage', name: 'LoginPage', component: LoginPage },
@@ -18,8 +15,6 @@ const routes = [
   { path: '/CreatePage', name: 'CreatPage', component: CreatePage },
   { path: '/PostDetailPage', name: 'PostDetailPage', component: PostDetailPage },
   { path: '/Posts', name: 'Posts', component: Posts }
-  
-  // Corrected here
 ]
 
 const router = createRouter({

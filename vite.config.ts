@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     rollupOptions: {
-      external: ['lucide-react'], // Externalize lucide-react if you don't want to bundle it
     },
   },
 })
