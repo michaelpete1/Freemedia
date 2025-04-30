@@ -1,11 +1,15 @@
 <!-- src/App.vue -->
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
     <Navbar />
-    <router-view />
+    <main class="flex-grow">
+      <router-view />
+    </main>
+    <layouts />
   </div>
 </template>
 
 <script setup lang="ts">
 import Navbar from './components/Navbar.vue'
+import layouts from './layouts/DefaultLayout.vue'
 </script>

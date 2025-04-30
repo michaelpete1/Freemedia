@@ -20,7 +20,7 @@
 import HeroSection from '../components/HeroSection.vue'
 import Carouselimg from '../components/Carouselimg.vue'
 import FeaturedPosts from '../components/FeaturedPosts.vue'
-import FooterSection from '../components/FooterSection.vue'
+
 </script>
 
 <style scoped>
