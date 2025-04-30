@@ -1,13 +1,16 @@
 <template>
   <div class="min-h-screen bg-[#3b2f2f] text-white px-4 py-8">
-    <div class="animate-fade-in space-y-16">
+    <div class="space-y-16 animate-fade-in">
       <!-- Hero Section -->
       <HeroSection />
+
+      <!-- Image Carousel Section -->
+      <Carouselimg />
 
       <!-- Featured Posts -->
       <FeaturedPosts />
 
-      <!-- Footer -->
+      <!-- Footer Section -->
       <FooterSection />
     </div>
   </div>
@@ -15,6 +18,7 @@
 
 <script setup lang="ts">
 import HeroSection from '../components/HeroSection.vue'
+import Carouselimg from '../components/Carouselimg.vue'
 import FeaturedPosts from '../components/FeaturedPosts.vue'
 import FooterSection from '../components/FooterSection.vue'
 </script>

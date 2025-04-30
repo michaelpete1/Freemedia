@@ -6,6 +6,14 @@
     <div v-if="post" class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
       <h2 class="text-3xl font-bold text-center text-brown-800 mb-4">{{ post.title }}</h2>
       <p class="text-gray-700 leading-relaxed">{{ post.body }}</p>
+
+      <!-- Button to go to Post 1 -->
+      <button
+        @click="$router.push('/PostDetailPage/1')"
+        class="mt-6 bg-brown-800 text-white px-4 py-2 rounded hover:bg-brown-700 block mx-auto"
+      >
+        Go to Post 1
+      </button>
     </div>
   </div>
 </template>
@@ -35,7 +43,7 @@ const fetchPost = async () => {
   }
 
   try {
-    const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    const response = await axios.get(`https://dummyjson.com/posts/${id}`)
     post.value = response.data
   } catch (err: any) {
     errorMessage.value = err.message || 'An unexpected error occurred'
@@ -49,11 +57,11 @@ onMounted(fetchPost)
 
 <style scoped>
 .bg-brown-50 {
-  background-color: #faf3e0; /* Light brown background */
+  background-color: #faf3e0;
 }
 
 .text-brown-800 {
-  color: #4f3b2f; /* Dark brown */
+  color: #4f3b2f;
 }
 
 .text-red-500 {

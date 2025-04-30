@@ -7,14 +7,14 @@ import CreatePage from '../views/CreatePage.vue'
 import PostDetailPage from '../views/PostDetailPage.vue'
 import Posts from '../views/Posts.vue'
 
-
 const routes = [
   { path: '/', name: 'HomePage', component: HomePage },
   { path: '/LoginPage', name: 'LoginPage', component: LoginPage },
   { path: '/SignUpPage', name: 'SignUpPage', component: SignUpPage },
   { path: '/ProfilePage', name: 'ProfilePage', component: ProfilePage },
   { path: '/CreatePage', name: 'CreatePage', component: CreatePage },
-  { path: '/PostDetailPage', name: 'PostDetailPage', component: PostDetailPage },
+  // ✅ Updated this line to use a dynamic segment :id
+  { path: '/PostDetailPage/:id', name: 'PostDetailPage', component: PostDetailPage },
   { path: '/Posts', name: 'Posts', component: Posts }
 ]
 

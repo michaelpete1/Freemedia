@@ -1,104 +1,100 @@
 <template>
-    <div class="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#4e3b31] to-[#6b4f3b] text-[#f4e9d8]">
-      <div class="w-full max-w-sm p-8 rounded-xl shadow-lg backdrop-blur-md bg-[#2f241c]/80 animate-fade-in">
-        <h2 class="text-2xl font-bold mb-6 text-center text-[#fbd4b4]">Create an Account</h2>
-        <form @submit.prevent="handleSignup" class="space-y-4">
-          <input
-            v-model="email"
-            type="email"
-            placeholder="Email"
-            required
-            class="w-full p-3 rounded bg-[#f4e9d8] text-[#4e3b31] placeholder:text-[#8d7a6d]"
-          />
-          <input
-            v-model="password"
-            type="password"
-            placeholder="Password"
-            required
-            class="w-full p-3 rounded bg-[#f4e9d8] text-[#4e3b31] placeholder:text-[#8d7a6d]"
-          />
-          <input
-            v-model="name"
-            type="text"
-            placeholder="Name"
-            required
-            class="w-full p-3 rounded bg-[#f4e9d8] text-[#4e3b31] placeholder:text-[#8d7a6d]"
-          />
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="w-full py-2 bg-[#fbd4b4] text-[#4e3b31] font-semibold rounded hover:bg-[#f8c99e] transition disabled:bg-opacity-50"
-          >
-            Sign Up
-          </button>
-        </form>
-        <p v-if="errorMessage" class="text-red-400 mt-4">{{ errorMessage }}</p>
-        <p v-if="isLoading" class="text-yellow-300 mt-2">Signing up...</p>
-      </div>
+  <div class="min-h-screen bg-[#4B2E2E] text-white flex justify-center items-center">
+    <div
+      class="bg-[#A67B5B] p-6 rounded-2xl shadow-2xl w-full max-w-md animate-fadeIn"
+    >
+      <h2 class="text-3xl font-bold text-center mb-6">Sign Up</h2>
+
+      <input v-model="email" type="email" placeholder="Email" class="input mb-4" />
+      <input v-model="password" type="password" placeholder="Password" class="input mb-4" />
+      <input v-model="name" type="text" placeholder="Name" class="input mb-4" />
+
+      <!-- Gender Dropdown -->
+      <select v-model="gender" class="input mb-4">
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <!-- Submit Button -->
+      <button
+        @click="signUp"
+        :disabled="loading"
+        class="bg-[#5D3A00] w-full p-2 rounded-md hover:bg-[#704400] transition duration-300"
+      >
+        {{ loading ? 'Signing Up...' : 'Sign Up' }}
+      </button>
+
+      <p v-if="errorMessage" class="text-red-200 text-center mt-4">{{ errorMessage }}</p>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { useUserStore } from '../stores/userStore'
-  import { supabase } from './lib/supabase'
-  
-  const email = ref('')
-  const password = ref('')
-  const name = ref('')
-  const isLoading = ref(false)
-  const errorMessage = ref('')
-  const router = useRouter()
-  const userStore = useUserStore()
-  
-  const handleSignup = async () => {
-    isLoading.value = true
-    errorMessage.value = ''
-  
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: email.value,
-        password: password.value,
-      })
-  
-      if (error) {
-        errorMessage.value = error.message
-      } else if (data?.user) {
-        const user = {
-          id: data.user.id,
-          email: data.user.email || '',
-          name: name.value || 'Default Name',
-        }
-  
-        userStore.login(user, data.session?.access_token || '')
-        localStorage.setItem('user', JSON.stringify(userStore.user))
-        localStorage.setItem('token', userStore.token)
-  
-        router.push('/') // Redirect to Home after sign-up
-      }
-    } catch (err: any) {
-      errorMessage.value = err.message || 'An unexpected error occurred'
-    } finally {
-      isLoading.value = false
-    }
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { supabase } from './lib/supabase'; // Adjust this path if needed
+import { useUserStore } from '../stores/userStore';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const name = ref('');
+const gender = ref('');
+const errorMessage = ref('');
+const loading = ref(false);
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const signUp = async () => {
+  errorMessage.value = '';
+  loading.value = true;
+
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (signUpError || !signUpData?.user) {
+    errorMessage.value = signUpError?.message || 'Signup failed';
+    loading.value = false;
+    return;
   }
-  </script>
-  
-  <style scoped>
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+
+  const userId = signUpData.user.id;
+
+  userStore.login(
+    {
+      id: userId,
+      email: email.value,
+      name: name.value,
+      gender: gender.value,
+    },
+    signUpData.session?.access_token || ''
+  );
+
+  loading.value = false;
+  router.push('/ProfilePage');
+};
+</script>
+
+<style scoped>
+.input {
+  @apply w-full px-4 py-2 rounded bg-white text-black placeholder-gray-600 focus:outline-none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  </style>
-  
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+</style>

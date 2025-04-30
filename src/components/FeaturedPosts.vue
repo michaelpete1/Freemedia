@@ -9,12 +9,19 @@
         :key="index"
         class="bg-white rounded-xl shadow-md hover:shadow-2xl transform transition-transform duration-300 hover:scale-105 hover:shadow-lg overflow-hidden"
       >
+        <!-- Post Image -->
+        <img
+          :src="post.image"
+          alt="Post cover"
+          class="w-full h-48 object-cover"
+        />
+
         <!-- Card Content -->
         <div class="p-6">
           <h3 class="text-2xl font-semibold text-[#4e3b31] mb-3">{{ post.title }}</h3>
           <p class="text-gray-600 mb-4">{{ post.summary }}</p>
         </div>
-        
+
         <!-- Read more button -->
         <div class="p-4">
           <router-link
@@ -26,13 +33,59 @@
         </div>
       </div>
     </div>
+
+    <!-- Animated News Ticker -->
+    <div class="mt-12 overflow-hidden bg-amber-100 rounded-lg shadow-md">
+      <div
+        class="animate-marquee whitespace-nowrap py-4 px-6 text-[#4e3b31] font-medium text-lg"
+      >
+        <span v-for="(headline, i) in newsHeadlines" :key="i" class="inline-block mx-8">
+          📰 {{ headline }}
+        </span>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 const posts = [
-  { title: 'Vue + Pinia Auth Setup', summary: 'Learn how to implement user login using Vue, Pinia, and Axios.' },
-  { title: 'TailwindCSS for Beginners', summary: 'A quick guide to start building stylish UIs with Tailwind CSS.' },
-  { title: 'Building a Mini Blog App', summary: 'How we built FreeMedia with modular components and clean design.' },
+  {
+    title: 'Community Event Highlights',
+    summary: 'Get a recap of the weekend’s tech meetup and what’s coming next.',
+    image: '/freemedia.jpg',
+  },
+  {
+    title: 'Latest Frameworks in 2025',
+    summary: 'Check out our review of the most promising frontend frameworks.',
+    image: '/freemedia2.jpg',
+  },
+  {
+    title: 'Next.js vs Nuxt 3',
+    summary: 'A deep comparison of two popular meta-frameworks for full-stack development.',
+    image: '/freemedia3.jpg',
+  },
+]
+
+const newsHeadlines = [
+  'Nigerian tech startup raises $2M in seed funding!',
+  'Vue 4 roadmap revealed — exciting features ahead!',
+  'Tailwind Labs announces Tailwind UI 2.0.',
+  'Supabase releases native image optimization features.',
 ]
 </script>
+
+<style scoped>
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 25s linear infinite;
+}
+</style>
