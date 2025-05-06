@@ -4,8 +4,8 @@ import LoginPage from '../views/LoginPage.vue'
 import SignUpPage from '../views/SignUpPage.vue'
 import ProfilePage from '../views/ProfilePage.vue'
 import CreatePage from '../views/CreatePage.vue'
-import PostDetailPage from '../views/PostDetailPage.vue'
 import Posts from '../views/Posts.vue'
+import PostDetailPage from '../views/PostDetailPage.vue'
 
 const routes = [
   { path: '/', name: 'HomePage', component: HomePage },
@@ -13,9 +13,12 @@ const routes = [
   { path: '/SignUpPage', name: 'SignUpPage', component: SignUpPage },
   { path: '/ProfilePage', name: 'ProfilePage', component: ProfilePage },
   { path: '/CreatePage', name: 'CreatePage', component: CreatePage },
-  // ✅ Updated this line to use a dynamic segment :id
-  { path: '/PostDetailPage/:id', name: 'PostDetailPage', component: PostDetailPage },
-  { path: '/Posts', name: 'Posts', component: Posts }
+  {
+    path: '/PostDetailPage/:id?',  // The `?` makes the `id` parameter optional
+    name: 'PostDetailPage',
+    component: PostDetailPage,  // Component directly imported here
+  },
+  { path: '/Posts', name: 'Posts', component: Posts },
 ]
 
 const router = createRouter({

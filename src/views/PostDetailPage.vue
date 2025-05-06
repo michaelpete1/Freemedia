@@ -7,19 +7,28 @@
       <h2 class="text-3xl font-bold text-center text-brown-800 mb-4">{{ post.title }}</h2>
       <p class="text-gray-700 leading-relaxed">{{ post.body }}</p>
 
-      <!-- Button to go to Post 1 -->
-      <button
-        @click="$router.push('/PostDetailPage/1')"
-        class="mt-6 bg-brown-800 text-white px-4 py-2 rounded hover:bg-brown-700 block mx-auto"
-      >
-        Go to Post 1
-      </button>
+      <!-- Buttons to switch posts -->
+      <div class="flex justify-center gap-4 mt-6">
+        <button
+          @click="$router.push(`/PostDetailPage/${Number(route.params.id) - 1}`)"
+          v-if="Number(route.params.id) > 1"
+          class="bg-brown-800 text-white px-4 py-2 rounded hover:bg-brown-700"
+        >
+          Previous Post
+        </button>
+        <button
+          @click="$router.push(`/PostDetailPage/${Number(route.params.id) + 1}`)"
+          class="bg-brown-800 text-white px-4 py-2 rounded hover:bg-brown-700"
+        >
+          Next Post
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 
@@ -34,8 +43,14 @@ const errorMessage = ref<string>('')
 
 const route = useRoute()
 
-const fetchPost = async () => {
-  const { id } = route.params
+const fetchPost = async (id: string | string[]) => {
+  isLoading.value = true
+  errorMessage.value = ''
+  post.value = null
+
+  // Debugging: Log the route parameter to see the current ID
+  console.log("Fetching post for ID:", id)
+
   if (!id) {
     errorMessage.value = 'Post ID is missing in the route.'
     isLoading.value = false
@@ -44,6 +59,10 @@ const fetchPost = async () => {
 
   try {
     const response = await axios.get(`https://dummyjson.com/posts/${id}`)
+    
+    // Debugging: Log the API response to check data
+    console.log("Post fetched:", response.data)
+
     post.value = response.data
   } catch (err: any) {
     errorMessage.value = err.message || 'An unexpected error occurred'
@@ -52,7 +71,17 @@ const fetchPost = async () => {
   }
 }
 
-onMounted(fetchPost)
+onMounted(() => {
+  fetchPost(route.params.id)
+})
+
+// Watch route changes to refetch the post when the ID changes
+watch(
+  () => route.params.id,
+  (newId) => {
+    fetchPost(newId)
+  }
+)
 </script>
 
 <style scoped>

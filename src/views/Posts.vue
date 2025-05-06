@@ -6,7 +6,7 @@
       <div v-if="posts.length > 0">
         <div v-for="post in posts" :key="post.id" class="mb-6 border-b pb-4">
           <router-link
-            :to="`/post/${post.id}`"
+            :to="`/PostDetailPage/${post.id}`"
             class="text-lg font-semibold text-brown-600 hover:text-brown-800"
           >
             {{ post.title }}

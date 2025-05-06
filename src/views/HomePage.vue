@@ -10,8 +10,6 @@
       <!-- Featured Posts -->
       <FeaturedPosts />
 
-      <!-- Footer Section -->
-      <FooterSection />
     </div>
   </div>
 </template>
