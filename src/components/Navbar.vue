@@ -101,7 +101,6 @@ const navLinks = [
   { name: 'ProfilePage', path: '/ProfilePage' },
   { name: 'LoginPage', path: '/LoginPage' },
   { name: 'CreatePage', path: '/CreatePage' },
-  { name: 'PostDetailPage', path: '/PostDetailPage' },
   { name: 'Posts', path: '/Posts' }
 ]
 </script>
